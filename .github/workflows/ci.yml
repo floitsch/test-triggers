@@ -1,40 +1,28 @@
-# Copyright (C) 2023 Toitware ApS. All rights reserved.
+# Zero-Clause BSD License
 
-name: CI
+# Copyright (C) 2023 Toitware ApS.
 
+# Permission to use, copy, modify, and/or distribute this software for any
+# purpose with or without fee is hereby granted.
+
+# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+# REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND
+# FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+# INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+# LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+# OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+# PERFORMANCE OF THIS SOFTWARE.
+
+name: Publish package
 on:
-  workflow_dispatch:
-    inputs:
-      sign_macos:
-        description: Sign the macOS binary
-        type: boolean
-        required: true
-        default: false
-      sign_windows:
-        description: Sign the Windows binary
-        type: boolean
-        required: true
-        default: false
-  release:
-    types: [published]
   push:
-    branches:
-      - "*"
-      - "*/*"
-
+    tags:
+    - 'v[0-9]+.[0-9]+.[0-9]+'
+    - 'v[0-9]+.[0-9]+.[0-9]+-*'
 jobs:
-  build:
-
+  create-release:
+    name: Create new release
     runs-on: ubuntu-latest
-
     steps:
-      - name: Hello
-        shell: bash
-        run: |
-          echo "hello - ${{github.event_name}}"
-
-      - name: Releasing
-        if: github.event_name == 'release' && runner.os == 'Linux'
-        shell: bash
-        run: |
-          echo "Releasing - ${{github.event.release.tag_name}}"
+      - name: Publish
+        uses: toitlang/pkg-publish@vf68850b2603b386561b51118146e519610ee4322
