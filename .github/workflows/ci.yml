@@ -25,4 +25,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Publish
-        uses: toitlang/pkg-publish@3bb49fce92afaa700e8b54ff824b2f79e5d9da42
+        uses: toitlang/pkg-publish@e9e6f64bb53c5192f172aaca835431b0947876bd
